@@ -1,8 +1,8 @@
 # Description: This file contains the views for the inventory app.
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.core.cache import cache
+#from django.core.cache import cache
 
 import jwt
 from datetime import datetime, timedelta
@@ -204,24 +204,32 @@ class VerifyView(APIView):
             print(e.__str__())
             return Response({'detail': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class ItemsView(APIView):
-    
-    def get(self, request):
+class ItemsView(generics.GenericAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+    def get(self, request, *args, **kwargs):
         try:
             if not is_authenticated(request):
                 return Response({'detail': 'Should be authenticated to access this route'}, status=status.HTTP_400_BAD_REQUEST)
             
-            items = Item.objects.all()
+            queryset = self.get_queryset()
+            
             # filtering
             name = request.query_params.get('name', None)
             if name is not None:
-                items = items.filter(name__icontains=name)
+                queryset = queryset.filter(name__icontains=name)
 
             category = request.query_params.get('category', None)
             if category is not None:
-                items = items.filter(category__icontains=category)
+                queryset = queryset.filter(category__name=category)
             
-            serializer = ItemSerializer(items, many=True)
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            
+            serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         except Item.DoesNotExist:
