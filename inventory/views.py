@@ -2,6 +2,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.core.cache import cache
 
 import jwt
 from datetime import datetime, timedelta
@@ -47,14 +48,14 @@ class RegisterView(APIView):
             serializer = UserSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                token = hash_token(serializer.data.get('password'))
-                if token is not None:
-                    url = f"/api/verify/?token={token}?email={serializer.data.get('email')}"
-                    email_status = send_email('Welcome to Kaizntree', 'Thank you for registering with us', 'temp@rmail.address', [serializer.data.get('email')], url)
-                    if email_status:
-                        print('Email sent successfully')
-                    else:
-                        print('Email not sent')
+                # token = hash_token(serializer.data.get('password'))
+                # if token is not None:
+                #     url = f"/api/verify/?token={token}?email={serializer.data.get('email')}"
+                #     email_status = send_email('Welcome to Kaizntree', 'Thank you for registering with us', 'temp@rmail.address', [serializer.data.get('email')], url)
+                #     if email_status:
+                #         print('Email sent successfully')
+                #     else:
+                #         print('Email not sent')
                 serializer.data.pop('password')
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -95,6 +96,9 @@ class LoginView(APIView):
                     else:
                         return Response({'detail': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+                    # add the user data to the cache
+                    # cache.set(userData.get('userID'), userData, timeout=60*60*24)
+
                     #add the tokens to the cookies
                     response = Response({
                         'access_token': access_token,
@@ -106,8 +110,9 @@ class LoginView(APIView):
                     return response
                 else:
                     return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
-    
+
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        
         except User.DoesNotExist:
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -124,7 +129,14 @@ class LogoutView(APIView):
         if access_token is None or refresh_token is None:
             return Response({'detail': 'Should be authneticated to access this route'}, status=status.HTTP_400_BAD_REQUEST)
         d = jwt.decode(access_token, 'sairambalu', algorithms=['HS256'])
+
+        # check if the user is there in the cache
+        #user = cache.get(d.get('userID'))
+        #if user is None:
         user = User.objects.get(email=d.get('email'), userID=d.get('userID'))
+        # else:
+        #     cache.delete(d.get('userID'))
+        
         if user is not None:
             token = Token.objects.get(userID=user.userID, token=refresh_token)
             if token is not None:

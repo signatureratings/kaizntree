@@ -21,7 +21,7 @@ export const HomeIcon = () => {
 
 const DashboardLoader = async () => {
   try {
-    const response = await fetch("/api/v1/items/")
+    const response = await fetch("/api/items/")
     return response.items
   } catch (error) {
     console.log(error)
@@ -29,6 +29,7 @@ const DashboardLoader = async () => {
 }
 
 export function Dashboard() {
+
   const items = useLoaderData()
   return (
     <div className="flex flex-col mx-4 mt-4 flex-grow">
