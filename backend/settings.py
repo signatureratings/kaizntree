@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-07j@valr#_784c@@gf0s%y_)7a35i1&_y7h1u4g-=_ojq6t8j*"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["kaizntree.azurewebsites.net", "127.0.0.1"]
+ALLOWED_HOSTS = ["kaizntree.azurewebsites.net", "127.0.0.1", "localhost"]
 
  
 # Application definition

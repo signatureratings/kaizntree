@@ -17,8 +17,11 @@ def verify_token(token, hashed_token):
         print(f"Error occurred while converting hash to password: {str(e)}")
         raise e
     
-def send_email(subject, message, from_email, recipient_list):
+def send_email(subject, message, from_email, recipient_list, url=None):
     try:
+        if url:
+            url = "http://localhost:8000" + url
+            message = f"{message}\n\nTo verify your account, please click the link: {url}"
         send_mail(subject, message, from_email, recipient_list)
         return True
     except Exception as e:

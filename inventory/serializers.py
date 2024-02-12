@@ -10,7 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['name', 'SKU', 'category', 'tag', 'cost', 'available_stock']
+        fields = '__all__'
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

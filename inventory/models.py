@@ -71,7 +71,7 @@ class Item(models.Model):
     SKU = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=200)
     tags = models.JSONField(blank=True, null=True, default=list)
-    category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE, null=True, blank=True)
+    category = models.CharField(max_length=100, null=True, blank=True)
     units = models.CharField(max_length=100)
     minimum_stock = models.IntegerField()
     desired_stock = models.IntegerField()
