@@ -1,4 +1,4 @@
 django
 djangorestframework
-decouple
+python-decouple
 psycopg2
