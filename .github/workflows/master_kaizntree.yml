@@ -48,7 +48,7 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd react-app-directory
+          cd frontend
           npm install
           npm run build
         
