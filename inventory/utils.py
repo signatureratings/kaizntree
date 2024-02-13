@@ -1,5 +1,6 @@
 import bcrypt
-from django.core.mail import send_mail
+
+#from django.core.mail import send_mail
 
 def hash_token(token):
     try:
@@ -17,14 +18,14 @@ def verify_token(token, hashed_token):
         print(f"Error occurred while converting hash to password: {str(e)}")
         raise e
     
-def send_email(subject, message, from_email, recipient_list, url=None):
-    try:
-        if url:
-            url = "http://localhost:8000" + url
-            message = f"{message}\n\nTo verify your account, please click the link: {url}"
-        send_mail(subject, message, from_email, recipient_list)
-        return True
-    except Exception as e:
-        print(f"Error occurred while sending email: {str(e)}")
-        return False
+# def send_email(subject, message, from_email, recipient_list, url=None):
+#     try:
+#         if url:
+#             url = "http://localhost:8000" + url
+#             message = f"{message}\n\nTo verify your account, please click the link: {url}"
+#         send_mail(subject, message, from_email, recipient_list)
+#         return True
+#     except Exception as e:
+#         print(f"Error occurred while sending email: {str(e)}")
+#         return False
     

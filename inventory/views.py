@@ -8,7 +8,7 @@ import jwt
 from datetime import datetime, timedelta
 from .serializers import UserSerializer, ItemSerializer, CategorySerializer, TokenSerializer
 from .models import User, Item, Category, Token
-from .utils import send_email, hash_token, verify_token
+from .utils import hash_token, verify_token
 
     
 
