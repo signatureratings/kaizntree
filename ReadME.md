@@ -1,6 +1,6 @@
 # Kaizntree
 
-django backend 
+django backend
 
 ## Getting Started
 
@@ -19,44 +19,49 @@ What things you need to install the software and how to install them.
 A step by step series of examples that tell you how to get a development environment running.
 
 1. Clone the repository:
-    ```
-    git clone https://github.com/signatureratings/kaizntree.git 
-    ```
+
+   ```
+   git clone https://github.com/signatureratings/kaizntree.git
+   ```
 
 2. Navigate to the project directory:
-    ```
-    cd kaizntree
-    ```
+
+   ```
+   cd kaizntree
+   ```
 
 3. (Optional) Create a virtual environment and activate it:
-    ```
-    python3 -m venv env
-    source env/bin/activate 
-    ```
+
+   ```
+   python3 -m venv env
+   source env/bin/activate
+   ```
 
 4. Install the requirements:
-    ```
-    pip install -r requirements.txt
-    ```
 
-5. create a .env file  with the fields mentioned below. The fields are submitted in the email
+   ```
+   pip install -r requirements.txt
+   ```
 
-    ```
-    DB_DATABASE 
-    DB_USERNAME 
-    DB_PASSWORD 
-    DB_HOST
-    ```
+5. create a .env file in the base directory with the fields mentioned below. The fields are submitted in the email
 
-5. Apply migrations:
-    ```
-    python manage.py migrate
-    ```
+   ```
+   DB_DATABASE
+   DB_USERNAME
+   DB_PASSWORD
+   DB_HOST
+   ```
 
-6. Run the development server:
-    ```
-    python manage.py runserver
-    ```
+6. Apply migrations:
+
+   ```
+   python manage.py migrate
+   ```
+
+7. Run the development server:
+   ```
+   python manage.py runserver
+   ```
 
 Now, you should be able to see the application running at localhost:8000 in your web browser.
 
@@ -76,14 +81,11 @@ python manage.py test inventory.tests
 
 ## Deployment
 
-
-
 ## Built With
- 
+
 Django, PostgreSQL, Django Rest Framework, Reactjs, Nodejs
 
 ## Authors
 
-* **Name** - Sairam Balu
-* **Email** - sairam.balu@rutgers.edu
-
+- **Name** - Sairam Balu
+- **Email** - sairam.balu@rutgers.edu
