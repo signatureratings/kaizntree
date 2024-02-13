@@ -15,17 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path, re_path
-
-# views for serving Single Page Application
-from django.views.generic import TemplateView
-from django.views.decorators.cache import never_cache
-
-# Serve Single Page Application
-index_view = never_cache(TemplateView.as_view(template_name='index.html'))
+from django.urls import include, path
+from inventory.views import IndexView
 
 urlpatterns = [
+
+    path('', IndexView.as_view(), name="index"),
     path("admin/", admin.site.urls),
     path("api/", include("inventory.urls")),
-    path("", index_view, name='index'),
 ]

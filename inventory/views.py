@@ -2,6 +2,7 @@
 from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.shortcuts import render
 #from django.core.cache import cache
 
 import jwt
@@ -9,6 +10,7 @@ from datetime import datetime, timedelta
 from .serializers import UserSerializer, ItemSerializer, CategorySerializer, TokenSerializer
 from .models import User, Item, Category, Token
 from .utils import hash_token, verify_token
+from django.views.generic import TemplateView
 
     
 
@@ -328,3 +330,7 @@ class CategoryView(APIView):
         except Exception as e:
             print(e.__str__() + 'error')
             return Response({'detail': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
