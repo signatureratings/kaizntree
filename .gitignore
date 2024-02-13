@@ -4,3 +4,4 @@ inventory/__pycache__/*
 backend/__pycache__/*
 .DS_Store
 .env
+test/*
