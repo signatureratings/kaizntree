@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,11 +84,11 @@ REST_FRAMEWORK = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER =  config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER =  os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 # Database
@@ -98,10 +97,10 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DATABASES = {
     "default": {
        'ENGINE': 'django.db.backends.postgresql',  # Database engine
-        'NAME': config('DB_DATABSE'),               # Database name
-        'USER': config('DB_USERNAME'),               # Database user
-        'PASSWORD': config('DB_PASSWORD'),       # Database password
-        'HOST': config('DB_HOST'),                        # Database host (default: 'localhost')
+        'NAME': os.environ.get('DB_NAME'),             # Database name
+        'USER': os.environ.get('DB_USERNAME'),               # Database user
+        'PASSWORD': os.environ.get('DB_PASSWORD'),       # Database password
+        'HOST': os.environ.get('DB_HOST'),                        # Database host (default: 'localhost')
         'PORT': '5432',     
     }
 }
